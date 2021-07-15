@@ -31,7 +31,7 @@ export class FruitComponent implements OnInit {
         [Validators.required, Validators.minLength(3)],
         ''
       ]
-    })
+    });
   }
 
   list(): void {
@@ -43,7 +43,7 @@ export class FruitComponent implements OnInit {
     fruit.name = this.titlecasePipe.transform(fruit.name);
     this.fruitService.create(fruit).subscribe(fruit => this.list());
     formDirective.resetForm();
-    this.fruitForm.reset();
+    this.fruitForm.reset();    
   }
 
   update(): void {
@@ -69,6 +69,10 @@ export class FruitComponent implements OnInit {
   }
 
   getErrorMessage(field: string): string {
+    if (this.fruitForm.get(field)?.hasError('required')) {
+      return `Required`;
+    }
+
     if (this.fruitForm.get(field)?.hasError('minlength')) {
       return `Minum length should be ${this.fruitForm.get(field)?.errors?.minlength.requiredLength}`;
     }

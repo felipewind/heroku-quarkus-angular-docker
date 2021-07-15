@@ -18,7 +18,7 @@ services:
 
   heroku-quarkus:
     container_name: heroku-quarkus
-    image: heroku/quarkus:1.0
+    image: heroku/quarkus-jvm:1.0
     build:
       context: ./quarkus/
       dockerfile: ./src/main/docker/Dockerfile.jvm
@@ -36,20 +36,20 @@ services:
       - DATABASE_PASSWORD=postgres
       - PORT=8080
     
-  # heroku-angular:
-  #   container_name: heroku-angular
-  #   image: heroku/angular:1.0
-  #   build:
-  #     context: ./angular/
-  #     dockerfile: ./Dockerfile
-  #   ports:
-  #     - 80:80
-  #   networks:
-  #     - heroku-net
-  #   depends_on:      
-  #     - heroku-quarkus
-  #   environment:      
-  #     - API_URL=http://localhost:8080
+  heroku-angular:
+    container_name: heroku-angular
+    image: heroku/angular:1.0
+    build:
+      context: ./angular/
+      dockerfile: ./Dockerfile
+    ports:
+      - 80:80
+    networks:
+      - heroku-net
+    depends_on:      
+      - heroku-quarkus
+    environment:      
+      - API_URL=http://localhost:8080
 
 networks:
   heroku-net:

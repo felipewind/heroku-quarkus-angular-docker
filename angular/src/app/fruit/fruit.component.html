@@ -1,7 +1,8 @@
 <mat-card class="create-card" *ngIf="!isEditingFruit; else editingFruitTemplate">
   <form [formGroup]="fruitForm" #formDirective="ngForm" (ngSubmit)="create(formDirective)">
     <mat-form-field>
-      <input matInput formControlName="name" placeholder="Fruit name" type="text" maxlength="30" #nameInput>
+      <input matInput formControlName="name" placeholder="Fruit name" type="text" maxlength="30" #nameInput
+        autocomplete="off">
       <mat-error *ngIf="fruitForm.get('name')?.invalid">{{getErrorMessage('name')}}
         <mat-hint align="end">{{nameInput.value?.length || 0}}/20</mat-hint>
       </mat-error>
@@ -15,9 +16,10 @@
 
 <ng-template #editingFruitTemplate>
   <mat-card class="create-card">
-    <form [formGroup]="fruitForm" #formDirective="ngForm" (ngSubmit)="update()">      
+    <form [formGroup]="fruitForm" #formDirective="ngForm" (ngSubmit)="update()">
       <mat-form-field>
-        <input matInput formControlName="name" placeholder="Fruit name" type="text" maxlength="30" #nameInput>
+        <input matInput formControlName="name" placeholder="Fruit name" type="text" maxlength="30" #nameInput
+          autocomplete="off">
         <mat-error *ngIf="fruitForm.get('name')?.invalid">{{getErrorMessage('name')}}
           <mat-hint align="end">{{nameInput.value?.length || 0}}/20</mat-hint>
         </mat-error>

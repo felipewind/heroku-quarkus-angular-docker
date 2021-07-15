@@ -14,15 +14,15 @@ printf "============= Quarkus Back End Project builded successfully by  Maven ==
 printf "\n\n\n"
 
 
-# printf "========= Building local Angular Front End Project with local Angular/NPM =========\n"
-# printf "\n"
-# cd angular/
-# npm install
-# ng build
-# cd ..
-# printf "\n"
-# printf "=========== Angular Front End Project builded successfully by Angular/NPM =========\n"
-# printf "\n\n\n"
+printf "========= Building local Angular Front End Project with local Angular/NPM =========\n"
+printf "\n"
+cd angular/
+npm install
+ng build
+cd ..
+printf "\n"
+printf "=========== Angular Front End Project builded successfully by Angular/NPM =========\n"
+printf "\n\n\n"
 
 
 function ctrl_c() {
