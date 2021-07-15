@@ -50,6 +50,7 @@ services:
       - heroku-quarkus
     environment:      
       - API_URL=http://localhost:8080
+      - PORT=80
 
 networks:
   heroku-net:
