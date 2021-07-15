@@ -1,0 +1,15 @@
+table {
+    width: 100%;
+}
+
+.create-card {    
+    flex: row;
+}
+
+.create-card span {
+    margin-right: 20px;
+}
+
+.create-card button {
+    margin-left: 20px;
+}

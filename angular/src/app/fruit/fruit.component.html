@@ -1,0 +1,69 @@
+<mat-card class="create-card" *ngIf="!isEditingFruit; else editingFruitTemplate">
+  <form [formGroup]="fruitForm" #formDirective="ngForm" (ngSubmit)="create(formDirective)">
+    <mat-form-field>
+      <input matInput formControlName="name" placeholder="Fruit name" type="text" maxlength="30" #nameInput>
+      <mat-error *ngIf="fruitForm.get('name')?.invalid">{{getErrorMessage('name')}}
+        <mat-hint align="end">{{nameInput.value?.length || 0}}/20</mat-hint>
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button [disabled]="fruitForm.invalid" color="primary" type="sumbit">
+      Add fruit
+    </button>
+  </form>
+</mat-card>
+
+<ng-template #editingFruitTemplate>
+  <mat-card class="create-card">
+    <form [formGroup]="fruitForm" #formDirective="ngForm" (ngSubmit)="update()">      
+      <mat-form-field>
+        <input matInput formControlName="name" placeholder="Fruit name" type="text" maxlength="30" #nameInput>
+        <mat-error *ngIf="fruitForm.get('name')?.invalid">{{getErrorMessage('name')}}
+          <mat-hint align="end">{{nameInput.value?.length || 0}}/20</mat-hint>
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button [disabled]="fruitForm.invalid" color="primary" type="sumbit">
+        Update fruit
+      </button>
+
+      <button mat-raised-button color="accent" (click)="cancelEdit()">
+        Cancel update
+      </button>
+    </form>
+  </mat-card>
+</ng-template>
+
+<table mat-table [dataSource]="fruits" class="mat-elevation-z8">
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> Id </th>
+    <td mat-cell *matCellDef="let fruit"> {{fruit.id}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let fruit" #fruitName>
+      {{fruit.name}}
+    </td>
+  </ng-container>
+
+  <!-- Action Column -->
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let fruit">
+      <button mat-icon-button (click)="edit(fruit)" color="primary">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button (click)="delete(fruit)" color="primary">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
