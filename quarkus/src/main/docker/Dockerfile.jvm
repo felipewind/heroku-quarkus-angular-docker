@@ -53,13 +53,18 @@ COPY --chown=1001 target/quarkus-app/quarkus/ /deployments/quarkus/
 EXPOSE 8080
 USER 1001
 
-ENTRYPOINT [ "/bin/sh", "-c" , \
-"echo $DATABASE_URL && \
-export DATASOURCE_JDBC_URL=jdbc:postgresql://${DATABASE_URL#*@} && \
-echo DATASOURCE_JDBC_URL=[$DATASOURCE_JDBC_URL] && \
-export DATASOURCE_JDBC_USER=$(expr $DATABASE_URL : '.*/\\([^:]*\\):.*') && \
-echo DATASOURCE_JDBC_USER=[$DATASOURCE_JDBC_USER] && \
-export DATASOURCE_JDBC_PASSWORD=$(expr $DATABASE_URL : '.*:\\([^@]*\\)@.*') && \
-echo DATASOURCE_JDBC_PASSWORD=[$DATASOURCE_JDBC_PASSWORD] && \
-/deployments/run-java.sh" ]
+COPY --chown=1001 heroku.sh /deployments/heroku.sh
+RUN chmod 540 /deployments/heroku.sh
+
+ENTRYPOINT [ "/bin/sh", "-c" , ". /deployments/heroku.sh && /deployments/run-java.sh" ]
+
+# ENTRYPOINT [ "/bin/sh", "-c" , \
+# "echo $DATABASE_URL && \
+# export DATASOURCE_JDBC_URL=jdbc:postgresql://${DATABASE_URL#*@} && \
+# echo DATASOURCE_JDBC_URL=[$DATASOURCE_JDBC_URL] && \
+# export DATASOURCE_JDBC_USER=$(expr $DATABASE_URL : '.*/\\([^:]*\\):.*') && \
+# echo DATASOURCE_JDBC_USER=[$DATASOURCE_JDBC_USER] && \
+# export DATASOURCE_JDBC_PASSWORD=$(expr $DATABASE_URL : '.*:\\([^@]*\\)@.*') && \
+# echo DATASOURCE_JDBC_PASSWORD=[$DATASOURCE_JDBC_PASSWORD] && \
+# /deployments/run-java.sh" ]
 
