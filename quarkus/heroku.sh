@@ -1,6 +1,6 @@
 #!/bin/sh
 # =============================================================================
-# This script automatically splits the Heroku ENV DATASOURCE_URL variable
+# This script automatically splits the Heroku ENV DATABASE_URL variable
 # into the three JDBC variables needed from Quarkus.
 # 
 # It will only do the split if the DB_HEROKU_SPLIT is set to "true".
@@ -13,7 +13,7 @@
 # For test purposes, you can set the DB_ECHO_VALUES to 'true' and check if the
 # values are correct.
 # 
-# Pattern of DATASOURCE_URL from Heroku:
+# Pattern of DATABASE_URL from Heroku:
 # --------------------------------------
 #   postgres://username:password@host:port/databasename
 # 
