@@ -56,5 +56,4 @@ USER 1001
 COPY --chown=1001 heroku.sh /deployments/heroku.sh
 RUN chmod 540 /deployments/heroku.sh
 
-# ENTRYPOINT [ "/bin/sh", "-c" , ". /deployments/heroku.sh && /deployments/run-java.sh" ]
 CMD [ "/bin/bash", "-c" , ". /deployments/heroku.sh && /deployments/run-java.sh" ]
