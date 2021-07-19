@@ -1,7 +1,15 @@
 # heroku-quarkus-angular-docker
-Demo project to deploy Quarkus/PostgreSQL and Angular/Nginx as containers on Heroku
+This is a demo project to deploy Quarkus/PostgreSQL and Angular/Nginx as containers on Heroku.
 
-## Getting Started
+## Getting Started with script
+
+Run this script to build Quarkus, Angular and to bring up docker-compose:
+```bash
+$ chmod +x run-after-local-build.sh
+$ ./run-with-local-build.sh
+```
+
+## Getting Started manually
 
 Build the Quarkus project:
 ```bash
@@ -24,10 +32,7 @@ version: "3.8"
 services:
   heroku-postgresql:
     container_name: heroku-postgres
-    image: heroku/postgres:13.3
-    build:
-      context: ./postgresql/
-      dockerfile: ./Dockerfile
+    image: postgres:13.3
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
@@ -50,12 +55,16 @@ services:
     depends_on:
       - heroku-postgresql
     environment:
-      - DATABASE_HOST=heroku-postgresql
-      - DATABASE_PORT=5432
-      - DATABASE_NAME=postgres
-      - DATABASE_USER=postgres
-      - DATABASE_PASSWORD=postgres
+      - DB_ECHO_VALUES=true      
       - PORT=8080
+        ### Using the DB_HEROKU_SPLIT = true  ###
+      - DB_HEROKU_SPLIT=true
+      - DATABASE_URL=postgres://postgres:postgres@heroku-postgresql:5432/postgres
+        ### Using the DB_HEROKU_SPLIT = false ###
+      # - DB_HEROKU_SPLIT=false
+      # - DB_JDBC_URL=jdbc:postgresql://heroku-postgresql:5432/postgres
+      # - DB_JDBC_USER=postgres
+      # - DB_JDBC_PASSWORD=postgres
     
   heroku-angular:
     container_name: heroku-angular
